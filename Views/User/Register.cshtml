@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Registration Page";
+}
+@model User
+<h1>Introduce Yourself</h1>
+<form asp-action="Register" asp-controller="User" method="POST">
+    
+    <span asp-validation-for="Username"></span>
+    <div></div>
+    <label asp-for="Username"></label>
+    <input asp-for="Username">
+    <div></div>
+
+    <span asp-validation-for="Name"></span>
+    <div></div>
+    <label asp-for="Name"></label>
+    <input asp-for="Name">
+    <div></div>
+    
+    <span asp-validation-for="Password"></span>
+    <div></div>
+    <label asp-for="Password"></label>
+    <input asp-for="Password">
+    <div></div>
+    
+    <span asp-validation-for="PasswordConfirm"></span>
+    <div></div>
+    <label asp-for="PasswordConfirm"></label>
+    <input asp-for="PasswordConfirm">
+    <div></div>
+
+    <input type="Submit" value="Sell Your Soul">
+</form>
