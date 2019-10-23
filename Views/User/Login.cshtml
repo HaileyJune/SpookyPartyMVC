@@ -4,15 +4,15 @@
 @model UserLogin
 <h1>We've Met Before</h1>
 <form asp-action="Login" asp-controller="User" method="POST">
-<span asp-validation-for="LogUsername"></span>
-    <div></div>
-    <label asp-for="LogUsername"></label>
-    <input asp-for="LogUsername">
-    <div></div>
-    <span asp-validation-for="LogPassword"></span>
-    <div></div>
-    <label asp-for="LogPassword"></label>
-    <input asp-for="LogPassword" type="password">
-    <div></div>
-    <input type="Submit" value="Welcome Back">
+    <div class="form-group row">
+        <label asp-for="LogUsername"></label>
+        <input asp-for="LogUsername" class="form-control">
+        <span asp-validation-for="LogUsername" class="form-text text-muted"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="LogPassword"></label>
+        <input asp-for="LogPassword" type="password" class="form-control">
+        <span asp-validation-for="LogPassword" class="form-text text-muted"></span>
+    </div>
+    <input type="Submit" class="btn btn-primary" value="Welcome Back">
 </form>

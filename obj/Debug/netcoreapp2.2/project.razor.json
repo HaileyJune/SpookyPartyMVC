@@ -2991,6 +2991,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "Views\\CostumeContest\\EntryVotes.cshtml",
+      "TargetPath": "Views\\CostumeContest\\EntryVotes.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "Views\\CostumeContest\\AllCostumes.cshtml",
       "TargetPath": "Views\\CostumeContest\\AllCostumes.cshtml",
       "FileKind": "mvc"

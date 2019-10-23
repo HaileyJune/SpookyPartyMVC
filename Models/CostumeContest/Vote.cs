@@ -20,6 +20,20 @@ namespace SpookyPartyMVC.Models
 
         public Vote()
         {}
+        public Vote(User user,Catergory catergory)
+        {
+            User = user;
+            UserId = user.UserId;
+            Catergory = catergory;
+            CatergoryId = catergory.CatergoryId;
+            Entry = null;
+            EntryId = 0;
+        }
+        public void SetVote(Entry entry)
+        {
+            Entry = entry;
+            EntryId = entry.EntryId;
+        }
 
         public Vote (User user, Entry entry, Catergory catergory)
         {

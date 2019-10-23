@@ -7,11 +7,20 @@
 <div class="container">
     <h1>Welcome to the first annual Spooky Barn Bash</h1>
     <div class="row">
-        Create or Update Your Entry
-        <a href="create">Create</a>
+        <div class="col">
+            Create or Update Your Entry
+            <a href="create">Create</a>
+        </div>
+        <div class="col">
+            @{if(Model.ActiveUser.EntryId != 0)
+            {
+                @Html.Partial("EntryVotes", Model.ActiveUser.Entry);
+            }}
+        </div>
     </div>
     <div class="row">
         Your Votes
+        @{Html.Partial("UserVotes", Model.ActiveUser.Votes);}
     </div>
     <div class="row">
         All Costumes

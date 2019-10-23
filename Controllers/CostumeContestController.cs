@@ -51,6 +51,8 @@ namespace SpookyPartyMVC.Controllers
                 }
 
                 dbContext.SaveChanges();
+                return Redirect("/vote");
+
             }
             return Redirect("/");
         }
@@ -64,6 +66,13 @@ namespace SpookyPartyMVC.Controllers
             User activeUser = dbContext.Users
                 .Where(use => use.UserId == userId)
                 .Include(use => use.Entry)
+                    .ThenInclude(ent => ent.Votes)
+                        .ThenInclude(vot => vot.Catergory)
+                .Include(use => use.Entry)
+                    .ThenInclude(ent => ent.Votes)
+                        .ThenInclude(vot => vot.User)
+                .Include(use => use.Votes)
+                    .ThenInclude(vote => vote.Catergory)
                 .FirstOrDefault();
             if (activeUser != null)
             {
@@ -73,9 +82,8 @@ namespace SpookyPartyMVC.Controllers
                 List<Entry> allCostumes = dbContext.Entries
                     .ToList();
 
-                List<Vote> userVotes = activeUser.Votes;
 
-                VotingViewModel viewModel = new VotingViewModel(allCatergories, userVotes, allCostumes, activeUser);
+                VotingViewModel viewModel = new VotingViewModel(allCatergories, allCostumes, activeUser);
 
                 return View(viewModel);
             }
@@ -89,35 +97,26 @@ namespace SpookyPartyMVC.Controllers
 
             User activeUser = dbContext.Users
                 .Where(use => use.UserId == userId)
+                .Include(use => use.Votes)
+                    .ThenInclude(vot => vot.Entry)
+                .Include(use => use.Votes)
+                    .ThenInclude(vot => vot.Catergory)
                 .FirstOrDefault();
             if (activeUser != null)
             {
                 Entry entryToVote = dbContext.Entries
                     .Where(ent => ent.EntryId == entryId)
-                    .Include(ent => ent.Votes)
                     .FirstOrDefault();
 
                 Catergory selectedCatergory = dbContext.Catergories
                     .Where(cat => cat.CatergoryId == catergoryId)
                     .FirstOrDefault();
 
-                Vote ifVoteExists = selectedCatergory.Votes
-                    .Where(vote => vote.UserId == userId)
+                Vote userVote = activeUser.Votes
+                    .Where(vot => vot.CatergoryId == selectedCatergory.CatergoryId)
                     .FirstOrDefault();
 
-                if (ifVoteExists == null)
-                {
-                    Vote NewVote = new Vote(activeUser, entryToVote, selectedCatergory);
-                    dbContext.Votes.Add(NewVote);
-                    selectedCatergory.Votes.Add(NewVote);
-                    activeUser.Votes.Add(NewVote);
-                    entryToVote.Votes.Add(NewVote);
-                }
-                else
-                {
-                    ifVoteExists.Entry = entryToVote;
-                    ifVoteExists.EntryId = entryToVote.EntryId;
-                }
+                userVote.SetVote(entryToVote);
                 dbContext.SaveChanges();
 
                 return Redirect("success");

@@ -46,6 +46,13 @@ namespace SpookyPartyMVC.Controllers
                     //Save user object to the database
                     dbContext.Add(user);
                     dbContext.SaveChanges();
+                    List<Catergory> allCatergories = dbContext.Catergories
+                        .ToList();
+                    foreach(Catergory cat in allCatergories)
+                    {
+                        user.Votes.Add(new Vote(user, cat));
+                    }
+                    dbContext.SaveChanges();
                     HttpContext.Session.SetInt32("userid", user.UserId);
                     return Redirect("/success"); //This doesn't exist yet
                 }
@@ -64,7 +71,7 @@ namespace SpookyPartyMVC.Controllers
                 var userInDb = dbContext.Users.FirstOrDefault(u => u.Username == userSubmission.LogUsername);
                 if(userInDb == null)
                 {
-                    ModelState.AddModelError("Username", "Yeah, I've never seen this username before.");
+                    ModelState.AddModelError("LogUsername", "Yeah, I've never seen this username before.");
                     return View("Index");
                 }
                 

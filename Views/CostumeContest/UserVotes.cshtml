@@ -1,1 +1,27 @@
 @model List<Vote>;
+
+All your Votes
+
+<div class="container">
+    <div class="row">
+        @{foreach(Vote vote in Model)
+        {
+            <div class="col">
+                <div class="row">
+                    @vote.Catergory.CatergoryName
+                </div>
+                <div class="row">
+                    @{if(vote.EntryId != 0)
+                    {
+                        @vote.Entry.CostumeName
+                    }
+                    else
+                    {
+                        <span>undecided</span>
+                    }
+                    }
+                </div>
+            </div>
+        }}
+    </div>
+</div>

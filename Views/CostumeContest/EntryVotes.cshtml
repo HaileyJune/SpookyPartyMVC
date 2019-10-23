@@ -1,0 +1,18 @@
+@model Entry
+    <span>Your Costume:
+        @Model.CostumeName
+        @Model.Description
+    </span>
+
+@{if(Model.Votes.Count > 0)
+{
+<span>Who voted for you?</span>
+
+<ul>
+    @{foreach(Vote vote in Model.Votes)
+    {
+        <li>vote.User.Name for vote.Category.CategoryName</li>
+    }}
+</ul>
+}
+}

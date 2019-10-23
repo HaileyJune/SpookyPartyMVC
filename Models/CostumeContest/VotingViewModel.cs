@@ -9,16 +9,13 @@ namespace SpookyPartyMVC.Models
     {
         public List<Catergory> Catergories {get;set;}
 
-        public List<Vote> UserVotes {get;set;}
-
         public List<Entry> AllCostumes {get;set;}
 
         public User ActiveUser {get;set;}
 
-        public VotingViewModel(List<Catergory> catergories, List<Vote> userVotes, List<Entry>allCostumes, User activeUser)
+        public VotingViewModel(List<Catergory> catergories, List<Entry> allCostumes, User activeUser)
         {
             Catergories = catergories;
-            UserVotes = userVotes;
             AllCostumes = allCostumes;
             ActiveUser = activeUser;
         }
