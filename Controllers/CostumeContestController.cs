@@ -37,11 +37,18 @@ namespace SpookyPartyMVC.Controllers
                 .FirstOrDefault();
             if (activeUser != null)
             {
-                Entry newEntry = new Entry(userInput, activeUser, activeUser.UserId);
-                dbContext.Entries.Add(newEntry);
-
-                activeUser.Entry = newEntry;
-                activeUser.EntryId = newEntry.EntryId;
+                if (activeUser.Entry ==null)
+                {
+                    Entry newEntry = new Entry(userInput, activeUser, activeUser.UserId);
+                    dbContext.Entries.Add(newEntry);
+                    activeUser.Entry = newEntry;
+                    activeUser.EntryId = newEntry.EntryId;
+                }
+                else
+                {
+                    activeUser.Entry.CostumeName = userInput.CostumeName;
+                    activeUser.Entry.Description = userInput.Description;
+                }
 
                 dbContext.SaveChanges();
             }
@@ -56,6 +63,7 @@ namespace SpookyPartyMVC.Controllers
             int? userId = HttpContext.Session.GetInt32("userid");
             User activeUser = dbContext.Users
                 .Where(use => use.UserId == userId)
+                .Include(use => use.Entry)
                 .FirstOrDefault();
             if (activeUser != null)
             {

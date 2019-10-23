@@ -1,0 +1,14 @@
+@model EntryCreation;
+<form asp-action="DoCreateEntry" asp-controller="CostumeContest" method="POST">
+<span asp-validation-for="CostumeName"></span>
+    <div></div>
+    <label asp-for="CostumeName"></label>
+    <input asp-for="CostumeName">
+    <div></div>
+    <span asp-validation-for="Description"></span>
+    <div></div>
+    <label asp-for="Description"></label>
+    <input asp-for="Description">
+    <div></div>
+    <input type="Submit" value="Get To Winning">
+</form>
